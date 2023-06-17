@@ -108,7 +108,7 @@ static lv_disp_drv_t disp_drv;
 static bool isPlaying = false;
 static bool isSelectedSongChanged = false;
 static int song_count = 0;
-static char textBuf[6];
+static char textBuf[12];
 static uint32_t currentSongDuration = 0;
 static uint32_t currentTimeProgress = 0;
 static String playingStr;
@@ -379,6 +379,16 @@ void setup()
 
   lv_init();
 
+    /* Create and start a periodic timer interrupt to call lv_tick_inc */
+  const esp_timer_create_args_t lv_periodic_timer_args = {
+    .callback = [](void *){
+      lv_tick_inc(1);
+    },
+    .name = "periodic_gui"};
+  esp_timer_handle_t lv_periodic_timer;
+  ESP_ERROR_CHECK(esp_timer_create(&lv_periodic_timer_args, &lv_periodic_timer));
+  ESP_ERROR_CHECK(esp_timer_start_periodic(lv_periodic_timer, 1000));
+
   screenWidth = gfx->width();
   screenHeight = gfx->height();
 #ifdef ESP32
@@ -598,7 +608,7 @@ void audio_id3lyrics(File &file, const size_t pos, const size_t len)
     size_t idxB = 0;
     size_t lastNewLineIdxB = 0;
     uint8_t lyricsLines = 0;
-    bool isSecTag;
+    bool isSecTag = false;
     uint8_t currentMinute;
     uint16_t currentSec;
     bool seenColon;
