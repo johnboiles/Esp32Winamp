@@ -34,3 +34,7 @@ This should upload and return logs for any connected EESP32.
 ## TODO:
 
 * I only have the 480x320 boards (SC-01 Plus) so I haven't tested the other boards. I haven't put in the effort to make the CMakeLists.txt have an option for the different boards, but that's probably not too hard.
+* Audio gets a little glitchy, especially in higher bitrate files.
+* Would be awesome to drop Arduino entirely, then you could use the latest-and-greatest ESP-IDFs (Arduino support typically lags ~6-9 months behind ESP-IDF development). A few of the libraries depend on Arduino right now though.
+* I think the UI animations could be made smoother with some more optimization.
+* Crashes sometimes.
