@@ -306,6 +306,54 @@ void nextSong(lv_event_t *e)
   play_selected_song();
 }
 
+void Task_Audio(void *pvParameters) // This is a task.
+{
+  while (true)
+  {
+    if (isPlaying)
+    {
+      audio.loop();
+      if (currentSongDuration == 0)
+      {
+        currentSongDuration = audio.getAudioFileDuration();
+        if (currentSongDuration > 0)
+        {
+          // Serial.printf("currentSongDuration: %d\n", currentSongDuration);
+          lv_slider_set_range(ui_ScaleProgress, 0, currentSongDuration);
+          // sprintf(textBuf, "%02d:%02d", currentSongDuration / 60, currentSongDuration % 60);
+          // lv_label_set_text(ui_LabelDuration, textBuf);
+        }
+      }
+      uint32_t currentTime = audio.getAudioCurrentTime();
+      if (currentTime != currentTimeProgress)
+      {
+        currentTimeProgress = currentTime;
+        // Serial.printf("currentTime: %d\n", currentTime);
+        lv_slider_set_value(ui_ScaleProgress, currentTimeProgress, LV_ANIM_ON);
+        sprintf(textBuf, "%02d:%02d", currentTimeProgress / 60, currentTimeProgress % 60);
+        lv_label_set_text(ui_LabelProgress, textBuf);
+        for (int i = 0; i < syncTimeLyricsCount; ++i)
+        {
+          if (syncTimeLyricsSec[i] == currentTime)
+          {
+            lv_roller_set_selected(ui_RollerLyrics, syncTimeLyricsLineIdx[i], LV_ANIM_ON);
+            break;
+          }
+        }
+
+        uint32_t kbps = audio.getBitRate(true);
+        sprintf(textBuf, "%d", kbps / 1000);
+        lv_label_set_text(ui_LabelKbps, textBuf);
+
+        uint32_t khz = audio.getSampleRate();
+        sprintf(textBuf, "%d", khz / 1000);
+        lv_label_set_text(ui_LabelKHz, textBuf);
+      }
+    }
+    delay(1);
+  }
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -418,54 +466,6 @@ void loop()
   {
     isSelectedSongChanged = false;
     play_selected_song();
-  }
-}
-
-void Task_Audio(void *pvParameters) // This is a task.
-{
-  while (true)
-  {
-    if (isPlaying)
-    {
-      audio.loop();
-      if (currentSongDuration == 0)
-      {
-        currentSongDuration = audio.getAudioFileDuration();
-        if (currentSongDuration > 0)
-        {
-          // Serial.printf("currentSongDuration: %d\n", currentSongDuration);
-          lv_slider_set_range(ui_ScaleProgress, 0, currentSongDuration);
-          // sprintf(textBuf, "%02d:%02d", currentSongDuration / 60, currentSongDuration % 60);
-          // lv_label_set_text(ui_LabelDuration, textBuf);
-        }
-      }
-      uint32_t currentTime = audio.getAudioCurrentTime();
-      if (currentTime != currentTimeProgress)
-      {
-        currentTimeProgress = currentTime;
-        // Serial.printf("currentTime: %d\n", currentTime);
-        lv_slider_set_value(ui_ScaleProgress, currentTimeProgress, LV_ANIM_ON);
-        sprintf(textBuf, "%02d:%02d", currentTimeProgress / 60, currentTimeProgress % 60);
-        lv_label_set_text(ui_LabelProgress, textBuf);
-        for (int i = 0; i < syncTimeLyricsCount; ++i)
-        {
-          if (syncTimeLyricsSec[i] == currentTime)
-          {
-            lv_roller_set_selected(ui_RollerLyrics, syncTimeLyricsLineIdx[i], LV_ANIM_ON);
-            break;
-          }
-        }
-
-        uint32_t kbps = audio.getBitRate(true);
-        sprintf(textBuf, "%d", kbps / 1000);
-        lv_label_set_text(ui_LabelKbps, textBuf);
-
-        uint32_t khz = audio.getSampleRate();
-        sprintf(textBuf, "%d", khz / 1000);
-        lv_label_set_text(ui_LabelKHz, textBuf);
-      }
-    }
-    delay(1);
   }
 }
 
