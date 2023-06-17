@@ -1,7 +1,6 @@
 # Winamp on ESP32
 
-I thought @moononournation's [Winamp on ESP32](https://www.youtube.com/watch?v=CRNgICzIGy0) video and [Instructable]
-(https://www.instructables.com/Design-Music-Player-UI-With-LVGL/) was incredible, and I had to have one, but the [original repo](https://github.com/moononournation/LVGL_Music_Player) didn't have any instructions on how to build it. So in this repo I've set it up to build with ESP-IDF 4.4.4.
+I thought @moononournation's [Winamp on ESP32](https://www.youtube.com/watch?v=CRNgICzIGy0) video and [Instructable](https://www.instructables.com/Design-Music-Player-UI-With-LVGL/) was incredible, and I had to have one, but the [original repo](https://github.com/moononournation/LVGL_Music_Player) didn't have any instructions on how to build it. So in this repo I've set it up to build with ESP-IDF 4.4.4.
 
 ![whips the llamas ass](https://github.com/johnboiles/Esp32Winamp/assets/218876/2f1f8aeb-df2b-4bf0-a11b-cece9676c01b)
 
