@@ -1,0 +1,19 @@
+[submodule "components/lvgl"]
+	path = components/lvgl
+	url = https://github.com/lvgl/lvgl.git
+	branch = release/v8.3
+[submodule "components/JPEGDEC"]
+	path = components/jpegdec
+	url = https://github.com/bitbank2/JPEGDEC.git
+[submodule "components/ESP32-audioI2S"]
+	path = components/ESP32-audioI2S
+	url = https://github.com/johnboiles/ESP32-audioI2S.git
+[submodule "components/Arduino"]
+	path = components/Arduino
+	url = https://github.com/espressif/arduino-esp32.git
+[submodule "components/TouchLib"]
+	path = components/TouchLib
+	url = https://github.com/mmMicky/TouchLib.git
+[submodule "components/Arduino_GFX"]
+	path = components/Arduino_GFX
+	url = https://github.com/johnboiles/Arduino_GFX
