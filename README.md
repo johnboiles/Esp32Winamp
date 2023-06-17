@@ -37,4 +37,5 @@ This should upload and return logs for any connected EESP32.
 * Audio gets a little glitchy, especially in higher bitrate files.
 * Would be awesome to drop Arduino entirely, then you could use the latest-and-greatest ESP-IDFs (Arduino support typically lags ~6-9 months behind ESP-IDF development). A few of the libraries depend on Arduino right now though.
 * I think the UI animations could be made smoother with some more optimization.
+* Lots and lots of duplicated code here (though a [little bit less]([url](https://github.com/johnboiles/Esp32Winamp/commit/f6fd588819d5bfc1121fb7f245ccda19dd586333)) than the original repo)
 * Crashes sometimes.
